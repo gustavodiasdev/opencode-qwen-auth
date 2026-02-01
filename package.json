@@ -20,11 +20,15 @@
     "llm",
     "opencode-plugins"
   ],
-  "author": "",
+  "author": "Gustavo Dias <me@gustavodias.dev>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gustavodiasdev/opencode-qwen-auth"
+    "url": "git+https://github.com/gustavodiasdev/opencode-qwen-auth.git"
+  },
+  "homepage": "https://github.com/gustavodiasdev/opencode-qwen-auth#readme",
+  "bugs": {
+    "url": "https://github.com/gustavodiasdev/opencode-qwen-auth/issues"
   },
   "dependencies": {
     "open": "^10.1.0"

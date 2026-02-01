@@ -4,6 +4,10 @@
 ![License](https://img.shields.io/github/license/gustavodiasdev/opencode-qwencode-auth)
 ![GitHub stars](https://img.shields.io/github/stars/gustavodiasdev/opencode-qwencode-auth)
 
+<p align="center">
+  <img src="assets/screenshot.png" alt="OpenCode com Qwen Code" width="800">
+</p>
+
 **Autentique o OpenCode CLI com sua conta qwen.ai.** Este plugin permite usar modelos Qwen3-Coder com **2.000 requisições gratuitas por dia** - sem API key ou cartão de crédito!
 
 [🇺🇸 Read in English](./README.md)

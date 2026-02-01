@@ -1,5 +1,5 @@
 {
-  "name": "opencode-qwen-auth",
+  "name": "opencode-qwencode-auth",
   "version": "1.0.0",
   "description": "Qwen OAuth authentication plugin for OpenCode - Access Qwen3-Coder models with your qwen.ai account",
   "module": "index.ts",
@@ -24,11 +24,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gustavodiasdev/opencode-qwen-auth.git"
+    "url": "git+https://github.com/gustavodiasdev/opencode-qwencode-auth.git"
   },
-  "homepage": "https://github.com/gustavodiasdev/opencode-qwen-auth#readme",
+  "homepage": "https://github.com/gustavodiasdev/opencode-qwencode-auth#readme",
   "bugs": {
-    "url": "https://github.com/gustavodiasdev/opencode-qwen-auth/issues"
+    "url": "https://github.com/gustavodiasdev/opencode-qwencode-auth/issues"
   },
   "dependencies": {
     "open": "^10.1.0"

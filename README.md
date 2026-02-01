@@ -1,7 +1,7 @@
 # 🤖 Qwen Code OAuth Plugin for OpenCode
 
-![License](https://img.shields.io/github/license/gustavodiasdev/opencode-qwen-auth)
-![GitHub stars](https://img.shields.io/github/stars/gustavodiasdev/opencode-qwen-auth)
+![License](https://img.shields.io/github/license/gustavodiasdev/opencode-qwencode-auth)
+![GitHub stars](https://img.shields.io/github/stars/gustavodiasdev/opencode-qwencode-auth)
 
 **Authenticate OpenCode CLI with your qwen.ai account.** This plugin enables you to use Qwen3-Coder models with **2,000 free requests per day** - no API key or credit card required!
 
@@ -30,7 +30,7 @@ Edit `~/.opencode/package.json`:
 ```json
 {
   "dependencies": {
-    "opencode-qwen-auth": "github:gustavodiasdev/opencode-qwen-auth"
+    "opencode-qwencode-auth": "github:gustavodiasdev/opencode-qwencode-auth"
   }
 }
 ```
@@ -39,7 +39,7 @@ Edit `~/.opencode/opencode.jsonc`:
 
 ```json
 {
-  "plugin": ["opencode-qwen-auth"]
+  "plugin": ["opencode-qwencode-auth"]
 }
 ```
 
@@ -139,8 +139,8 @@ The `qwen-code` provider is added via plugin. In the `opencode auth login` comma
 
 ```bash
 # Clone the repository
-git clone https://github.com/gustavodiasdev/opencode-qwen-auth.git
-cd opencode-qwen-auth
+git clone https://github.com/gustavodiasdev/opencode-qwencode-auth.git
+cd opencode-qwencode-auth
 
 # Install dependencies
 bun install
@@ -156,7 +156,7 @@ Edit `~/.opencode/package.json`:
 ```json
 {
   "dependencies": {
-    "opencode-qwen-auth": "file:///absolute/path/to/opencode-qwen-auth"
+    "opencode-qwencode-auth": "file:///absolute/path/to/opencode-qwencode-auth"
   }
 }
 ```

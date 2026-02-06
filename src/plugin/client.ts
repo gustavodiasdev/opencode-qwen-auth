@@ -12,6 +12,7 @@ import type {
   StreamChunk
 } from '../types.js';
 import { getValidCredentials, loadCredentials, isCredentialsExpired } from './auth.js';
+import { QwenAuthError, QwenApiError } from '../errors.js';
 
 /**
  * QwenClient - Makes authenticated API calls to Qwen
@@ -66,7 +67,7 @@ export class QwenClient {
    */
   private getAuthHeader(): string {
     if (!this.credentials) {
-      throw new Error('Not authenticated. Please run the OAuth flow first.');
+      throw new QwenAuthError('auth_required');
     }
     return `Bearer ${this.credentials.accessToken}`;
   }
@@ -87,7 +88,7 @@ export class QwenClient {
     if (!this.credentials) {
       const initialized = await this.initialize();
       if (!initialized) {
-        throw new Error('No valid Qwen credentials found. Please authenticate first.');
+        throw new QwenAuthError('auth_required');
       }
     }
 
@@ -106,7 +107,7 @@ export class QwenClient {
     if (!response.ok) {
       const errorText = await response.text();
       this.log('API Error:', response.status, errorText);
-      throw new Error(`Qwen API error: ${response.status} - ${errorText}`);
+      throw new QwenApiError(response.status, errorText);
     }
 
     const data = await response.json();
@@ -122,7 +123,7 @@ export class QwenClient {
     if (!this.credentials) {
       const initialized = await this.initialize();
       if (!initialized) {
-        throw new Error('No valid Qwen credentials found. Please authenticate first.');
+        throw new QwenAuthError('auth_required');
       }
     }
 
@@ -142,7 +143,7 @@ export class QwenClient {
     if (!response.ok) {
       const errorText = await response.text();
       this.log('API Error:', response.status, errorText);
-      throw new Error(`Qwen API error: ${response.status} - ${errorText}`);
+      throw new QwenApiError(response.status, errorText);
     }
 
     const reader = response.body?.getReader();

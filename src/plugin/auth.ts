@@ -10,6 +10,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
 import type { QwenCredentials } from '../types.js';
 import { refreshAccessToken, isCredentialsExpired } from '../qwen/oauth.js';
+import { logTechnicalDetail } from '../errors.js';
 
 /**
  * Get the path to the credentials file
@@ -58,7 +59,7 @@ export function loadCredentials(): QwenCredentials | null {
 
     return null;
   } catch (error) {
-    console.error('Error loading Qwen credentials:', error);
+    logTechnicalDetail(`Erro ao carregar credenciais: ${error}`);
     return null;
   }
 }
@@ -102,7 +103,7 @@ export async function getValidCredentials(): Promise<QwenCredentials | null> {
       credentials = await refreshAccessToken(credentials.refreshToken);
       saveCredentials(credentials);
     } catch (error) {
-      console.error('Failed to refresh token:', error);
+      logTechnicalDetail(`Falha no refresh: ${error}`);
       return null;
     }
   }

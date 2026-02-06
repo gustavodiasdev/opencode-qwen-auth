@@ -23,6 +23,9 @@ import {
   tokenResponseToCredentials,
   refreshAccessToken,
 } from './qwen/oauth.js';
+import { logTechnicalDetail } from './errors.js';
+export { QwenAuthError, QwenApiError } from './errors.js';
+export type { AuthErrorKind } from './errors.js';
 
 // ============================================
 // Helpers
@@ -102,14 +105,25 @@ export const QwenAuthPlugin = async (_input: unknown) => {
             accessToken = refreshed.accessToken;
             saveCredentials(refreshed);
           } catch (e) {
-            console.error('[Qwen] Token refresh failed:', e);
+            const detail = e instanceof Error ? e.message : String(e);
+            logTechnicalDetail(`Token refresh falhou: ${detail}`);
+            // Não continuar com token expirado - tentar fallback
+            accessToken = undefined;
           }
         }
 
         // Fallback para credenciais do qwen-code
         if (!accessToken) {
           const creds = checkExistingCredentials();
-          if (creds) accessToken = creds.accessToken;
+          if (creds) {
+            accessToken = creds.accessToken;
+          } else {
+            console.warn(
+              '[Qwen] Token expirado e sem credenciais alternativas. ' +
+              'Execute "npx opencode-qwencode-auth" ou "qwen-code auth login" para re-autenticar.'
+            );
+            return null;
+          }
         }
 
         if (!accessToken) return null;

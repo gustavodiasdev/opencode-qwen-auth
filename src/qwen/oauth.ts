@@ -9,6 +9,7 @@ import { randomBytes, createHash, randomUUID } from 'node:crypto';
 
 import { QWEN_OAUTH_CONFIG } from '../constants.js';
 import type { QwenCredentials } from '../types.js';
+import { QwenAuthError, logTechnicalDetail } from '../errors.js';
 
 /**
  * Device authorization response from Qwen OAuth
@@ -87,9 +88,8 @@ export async function requestDeviceAuthorization(
 
   if (!response.ok) {
     const errorData = await response.text();
-    throw new Error(
-      `Device authorization failed: ${response.status} ${response.statusText}. Response: ${errorData}`
-    );
+    logTechnicalDetail(`Device auth HTTP ${response.status}: ${errorData}`);
+    throw new QwenAuthError('auth_required', `HTTP ${response.status}: ${errorData}`);
   }
 
   const result = await response.json() as DeviceAuthorizationResponse;
@@ -193,7 +193,8 @@ export async function refreshAccessToken(refreshToken: string): Promise<QwenCred
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Token refresh failed: ${response.status} - ${errorText}`);
+    logTechnicalDetail(`Token refresh HTTP ${response.status}: ${errorText}`);
+    throw new QwenAuthError('refresh_failed', `HTTP ${response.status}: ${errorText}`);
   }
 
   const data = await response.json() as TokenResponse;

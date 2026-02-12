@@ -6,7 +6,7 @@
  */
 
 const REAUTH_HINT =
-  'Execute "npx opencode-qwencode-auth" ou "qwen-code auth login" para re-autenticar.';
+  'Execute "opencode auth login" e selecione "Qwen Code (qwen.ai OAuth)" para autenticar.';
 
 // ============================================
 // Erro de Autenticação

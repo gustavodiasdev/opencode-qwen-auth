@@ -12,6 +12,17 @@ import type { QwenCredentials } from '../types.js';
 import { QwenAuthError, logTechnicalDetail } from '../errors.js';
 
 /**
+ * Erro lançado quando o servidor pede slow_down (RFC 8628)
+ * O caller deve aumentar o intervalo de polling
+ */
+export class SlowDownError extends Error {
+  constructor() {
+    super('slow_down: server requested increased polling interval');
+    this.name = 'SlowDownError';
+  }
+}
+
+/**
  * Device authorization response from Qwen OAuth
  */
 export interface DeviceAuthorizationResponse {
@@ -44,13 +55,6 @@ export function generatePKCE(): { verifier: string; challenge: string } {
     .digest('base64url');
 
   return { verifier, challenge };
-}
-
-/**
- * Generate random state for OAuth
- */
-export function generateState(): string {
-  return randomBytes(16).toString('hex');
 }
 
 /**
@@ -139,7 +143,7 @@ export async function pollDeviceToken(
 
       // RFC 8628: slow_down means we should increase poll interval
       if (response.status === 429 && errorData.error === 'slow_down') {
-        return null; // Still pending, but should slow down
+        throw new SlowDownError();
       }
 
       throw new Error(
@@ -255,7 +259,7 @@ export async function performDeviceAuthFlow(
       }
     } catch (error) {
       // Check if we should slow down
-      if (error instanceof Error && error.message.includes('slow_down')) {
+      if (error instanceof SlowDownError) {
         interval = Math.min(interval * 1.5, 10000); // Increase interval, max 10s
       } else {
         throw error;
